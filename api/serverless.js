@@ -1,18 +1,21 @@
-// Import the framework and instantiate it
-import Fastify from 'fastify'
-const fastify = Fastify({
-  logger: true
-})
+"use strict";
 
-// Declare a route
-fastify.get('/', async function handler (request, reply) {
-  return { hello: 'world' }
-})
+// Read the .env file.
+import * as dotenv from "dotenv";
+dotenv.config();
 
-// Run the server!
-try {
-  await fastify.listen({ port: 3000 })
-} catch (err) {
-  fastify.log.error(err)
-  process.exit(1)
+// Require the framework
+import Fastify from "fastify";
+
+// Instantiate Fastify with some config
+const app = Fastify({
+  logger: true,
+});
+
+// Register your application as a normal plugin.
+app.register(import("../src/app.js"));
+
+export default async (req, res) => {
+    await app.ready();
+    app.server.emit('request', req, res);
 }
