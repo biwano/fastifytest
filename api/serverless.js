@@ -2,7 +2,7 @@
 
 // Read the .env file.
 import * as dotenv from "dotenv";
-import addSentry from '../src/addSentry'
+import addSentry from '../src/addSentry.js'
 import Fastify from "fastify";
 
 // Instantiate Fastify with some config
