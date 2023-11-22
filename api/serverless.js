@@ -1,7 +1,6 @@
 "use strict";
 
 // Read the .env file.
-import * as dotenv from "dotenv";
 import addSentry from '../src/addSentry.js'
 import Fastify from "fastify";
 
@@ -10,9 +9,9 @@ const app = Fastify({
   logger: true,
 });
 
+addSentry(app)
 // Register your application as a normal plugin.
 app.register(import("../src/app.js"));
-addSentry(app)
 
 export default async (req, res) => {
     await app.ready();
